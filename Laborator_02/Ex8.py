@@ -17,6 +17,8 @@ def ascii_code_divisible_by_x(lst, x=1, flag=True):
     return l1
 
 print(ascii_code_divisible_by_x(["test", "hello", "lab002"], 2, False))
+print(ascii_code_divisible_by_x(["test", "hello", "lab002"]))
+print(ascii_code_divisible_by_x(["test", "hello", "lab002", "AtoZZ"], flag=False))
 
 
 

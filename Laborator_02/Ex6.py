@@ -14,3 +14,5 @@ def counting(x, *lists):
 
 
 print(counting(2, [1, 2, 3], [2, 3, 4], [4, 5, 6], [4, 1, "test"]))
+print(counting(-1, [1, 2, 3], [1, 2]))
+print(counting(1, [1, 2], ["1"], [1, 0]))
