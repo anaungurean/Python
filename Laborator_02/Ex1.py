@@ -3,7 +3,7 @@
 def fib (n):
     x = 0
     y = 1
-    l = list()
+    l = [] #mai eficient decta list()
     for i in range ( 1 , n+1 ) :
         if i == 1:
             l.append(x)
