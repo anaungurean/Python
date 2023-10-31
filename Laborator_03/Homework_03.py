@@ -3,6 +3,8 @@ Ex1. Write a function that receives as parameters two lists a and b
 and returns a list of sets containing: (a intersected with b, a reunited with b, a - b, b - a)
 '''
 
+import copy
+
 
 def ex_01(a, b):
     set_1 = set(a)
@@ -43,16 +45,28 @@ Compare two dictionaries without using the operator "==" returning True or False
 
 
 def lists_are_equal(l1, l2):
+
     if len(l1) != len(l2):
         return False
 
-    l2_copy = l2.copy()
-
-    for elem in l1:
-        if elem in l2_copy:
-            l2_copy.remove(elem)
-        else:
+    for i in range(len(l1)):
+        if type(l1[i]) != type(l2[i]):
             return False
+        if isinstance(l1[i], dict):
+            if not ex_03(l1[i], l2[i]):
+                return False
+        elif isinstance(l1[i], list):
+            if not lists_are_equal(l1[i], l2[i]):
+                return False
+        elif isinstance(l1[i], set):
+            if not sets_are_equal(l1[i], l2[i]):
+                return False
+        elif isinstance(l1[i], tuple):
+            if not tuples_are_equal(l1[i], l2[i]):
+                return False
+        else:
+            if l1[i] != l2[i]:
+                return False
     return True
 
 
@@ -70,40 +84,52 @@ def tuples_are_equal(t1, t2):
     if len(t1) != len(t2):
         return False
 
-    for elem1, elem2 in zip(t1, t2):
-        if elem1 != elem2:
+    for i in range(len(t1)):
+        if type(t1[i]) != type(t2[i]):
             return False
-
+        if isinstance(t1[i], dict):
+            if not ex_03(t1[i], t2[i]):
+                return False
+        elif isinstance(t1[i], list):
+            if not lists_are_equal(t1[i], t2[i]):
+                return False
+        elif isinstance(t1[i], set):
+            if not sets_are_equal(t1[i], t2[i]):
+                return False
+        elif isinstance(t1[i], tuple):
+            if not tuples_are_equal(t1[i], t2[i]):
+                return False
+        else:
+            if t1[i] != t2[i]:
+                return False
     return True
 
 
 def ex_03(d1, d2):
     if len(d1) != len(d2):
         return False
-    else:
-        for i in d1.keys():
-            if i not in d2:
+    for key in d1:
+        if key not in d2:
+            return False
+        if type(d1[key]) != type(d2[key]):
+            return False
+        if isinstance(d1[key], dict):
+            if not ex_03(d1[key], d2[key]):
                 return False
-            else:
-                if type(d1[i]) != type(d2[i]):
-                    return False
-                else:
-                    if isinstance(d1[i], dict):
-                        if ex_03(d1[i], d2[i]) is not True:
-                            return False
-                    elif isinstance(d1[i], list):
-                        if lists_are_equal(d1[i], d2[i]) is not True:
-                            return False
-                    elif isinstance(d1[i], set):
-                        if sets_are_equal(d1[i], d2[i]) is not True:
-                            return False
-                    elif isinstance(d1[i], tuple):
-                        if tuples_are_equal(d1[i], d2[i]) is not True:
-                            return False
-                    else:
-                        if d1[i] != d2[i]:
-                            return False
+        elif isinstance(d1[key], list):
+            if not lists_are_equal(d1[key], d2[key]):
+                return False
+        elif isinstance(d1[key], set):
+            if not sets_are_equal(d1[key], d2[key]):
+                return False
+        elif isinstance(d1[key], tuple):
+            if not tuples_are_equal(d1[key], d2[key]):
+                return False
+        else:
+            if d1[key] != d2[key]:
+                return False
     return True
+
 
 
 '''
@@ -262,11 +288,3 @@ def ex_09(*args, **kwargs):
         if val in kwargs.values():
             count += 1
     return count
-
-
-
-            
-
-
-
-
