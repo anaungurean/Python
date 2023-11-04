@@ -3,6 +3,7 @@ Ex1. Write a Python class that simulates a Stack.
 The class should implement methods like push, pop, peek
 (the last two methods should return None if no element is present in the stack).
 '''
+import copy
 
 
 class Stack:
@@ -11,7 +12,7 @@ class Stack:
         self.__items = []
 
     def get_items(self):
-        return list(self.__items)
+        return self.__items.copy()
 
     def get_size(self):
         return len(self.__items)
@@ -20,7 +21,8 @@ class Stack:
         return self.get_size() == 0
 
     def push(self, item: object):
-        self.__items.append(item)
+        item_copy = copy.deepcopy(item)
+        self.__items.append(item_copy)
 
     def pop(self):
         if self.is_empty():
@@ -32,7 +34,14 @@ class Stack:
         if self.is_empty():
             return None
         else:
-            return self.__items[-1]
+            if not isinstance(self.__items[-1], (int, float, str, bool, tuple)):
+                item = copy.deepcopy(self.__items[-1])
+            else:
+                item = self.__items[-1]
+            return item
+
+    def __str__(self):
+        return str(self.__items)
 
 
 '''
@@ -47,7 +56,7 @@ class Queue:
         self.__items = []
 
     def get_items(self):
-        return list(self.__items)
+        return self.__items.copy()
 
     def get_size(self):
         return len(self.__items)
@@ -55,8 +64,9 @@ class Queue:
     def is_empty(self):
         return self.get_size() == 0
 
-    def push(self, item):
-        self.__items.append(item)
+    def push(self, item: object):
+        item_copy = copy.deepcopy(item)
+        self.__items.append(item_copy)
 
     def pop(self):
         if self.is_empty():
@@ -68,7 +78,14 @@ class Queue:
         if self.is_empty():
             return None
         else:
-            return self.__items[0]
+            if not isinstance(self.__items[0], (int, float, str, bool, tuple)):
+                item = copy.deepcopy(self.__items[0])
+            else:
+                item = self.__items[0]
+            return item
+
+    def __str__(self):
+        return str(self.__items)
 
 '''
 Ex03. Write a Python class that simulates a matrix of size NxM, with N and M provided at initialization. 
@@ -95,13 +112,26 @@ class Matrix:
 
     def set_matrix(self, matrix):
         if len(matrix) != self.__rows or len(matrix[0]) != self.__columns:
-            raise ValueError("Matricea data ca parametru nu are dimensiunile corecte")
+            raise ValueError("Matricea dată ca parametru nu are dimensiunile corecte.")
+
+        for row in matrix:
+            if len(row) != self.__columns:
+                raise ValueError("Unul dintre rânduri nu are dimensiunea corectă.")
+            for element in row:
+                if not isinstance(element, (int, float)):
+                    raise TypeError("Toate elementele matricei trebuie să fie int sau float.")
         self.__matrix = matrix
 
     def get_element(self, row, column):
         return self.__matrix[row][column]
 
     def set_element(self, row, column, value):
+        if row < 0 or row >= self.__rows or column < 0 or column >= self.__columns:
+            raise ValueError("Coordonatele date nu sunt valide")
+
+        if not isinstance(value, (int, float)):
+            raise TypeError("Elementul trebuie să fie un număr întreg sau un număr real.")
+
         self.__matrix[row][column] = value
 
     def transpose(self):
@@ -116,7 +146,7 @@ class Matrix:
             raise Exception("Numarul de coloane a primei matrici trebuie sa fie egal cu numarul de linii ale celeilalte matrici")
         else:
             result_matrix = Matrix(self.__rows, other.get_columns())
-            for row in range(0,self.__rows):
+            for row in range(0, self.__rows):
                 for column in range(0, other.get_columns()):
                     value = 0
                     for i in range(0, self.__columns):
@@ -130,6 +160,9 @@ class Matrix:
                 self.set_element(row, column, function(self.get_element(row, column)))
 
     def __str__(self):
-        return str(self.__matrix)
+        matrix_str = ""
+        for row in self.__matrix:
+            matrix_str += ' '.join(map(str, row)) + "\n"
+        return matrix_str
 
 
