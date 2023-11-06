@@ -90,6 +90,12 @@ class MyHomeworkTestCase(unittest.TestCase):
         expected_applied = [[2, 3, 4, 5], [6, 7, 8, 9], [10, 1, 2, 6]]
         self.assertEqual(expected_applied, matrix_1.get_matrix(),)
 
+        with self.assertRaises(Exception):
+            matrix_1.apply(lambda x : x / 0)
+
+        with self.assertRaises(Exception):
+            matrix_1.apply(lambda x : x + "Ana")
+
         with self.assertRaises(TypeError):
             matrix_1.set_element(1, 1, "Ana")
 
@@ -106,6 +112,7 @@ class MyHomeworkTestCase(unittest.TestCase):
         matrix_3.set_matrix([[1, 2], [5, 6], [9, 0]])
         with self.assertRaises(Exception):
             multiplied_matrix = matrix_1 * matrix_3
+
 
 
 

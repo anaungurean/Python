@@ -157,7 +157,11 @@ class Matrix:
     def apply(self, function):
         for row in range(0, self.__rows):
             for column in range(0, self.__columns):
-                self.set_element(row, column, function(self.get_element(row, column)))
+                try:
+                    value = function(self.get_element(row, column))
+                    self.set_element(row, column, value)
+                except Exception as e:
+                    raise Exception("Nu s-a putut aplica funcția pe elementul de pe linia " + str(row) + " și coloana " + str(column) + ". Cauza: " + str(e))
 
     def __str__(self):
         matrix_str = ""
