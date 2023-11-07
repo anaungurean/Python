@@ -5,14 +5,10 @@ The class should implement methods like push, pop, peek
 '''
 import copy
 
-
 class Stack:
 
     def __init__(self):
         self.__items = []
-
-    def get_items(self):
-        return self.__items.copy()
 
     def get_size(self):
         return len(self.__items)
@@ -26,13 +22,13 @@ class Stack:
 
     def pop(self):
         if self.is_empty():
-            return None
+            raise Exception("The stack is empty")
         else:
             return self.__items.pop()
 
     def peek(self):
         if self.is_empty():
-            return None
+            raise Exception("The stack is empty")
         else:
             if not isinstance(self.__items[-1], (int, float, str, bool, tuple)):
                 item = copy.deepcopy(self.__items[-1])
@@ -55,9 +51,6 @@ class Queue:
     def __init__(self):
         self.__items = []
 
-    def get_items(self):
-        return self.__items.copy()
-
     def get_size(self):
         return len(self.__items)
 
@@ -70,13 +63,13 @@ class Queue:
 
     def pop(self):
         if self.is_empty():
-            return None
+            raise Exception("The queue is empty")
         else:
             return self.__items.pop(0)
 
     def peek(self):
         if self.is_empty():
-            return None
+            raise Exception("The queue is empty")
         else:
             if not isinstance(self.__items[0], (int, float, str, bool, tuple)):
                 item = copy.deepcopy(self.__items[0])

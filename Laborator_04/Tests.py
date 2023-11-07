@@ -7,8 +7,10 @@ class MyHomeworkTestCase(unittest.TestCase):
 
         stack = Homework_04.Stack()
         self.assertTrue(stack.is_empty())
-        self.assertEqual(stack.pop(), None)
-        self.assertEqual(stack.peek(), None)
+        with self.assertRaises(Exception):
+            stack.pop()
+        with self.assertRaises(Exception):
+            stack.peek()
         stack.push(10)
         stack.push(20.5)
         stack.push("Ana")
@@ -30,7 +32,7 @@ class MyHomeworkTestCase(unittest.TestCase):
         queue.push({10, 20, 30})
         queue.push([11, 22, 33])
         stack.push(queue)
-        self.assertEqual([{'c': {'d': 1, 'e': 2}, 'f': 2}, {10, 20, 30}, [11, 22, 33]],stack.peek().get_items())
+        # self.assertEqual([{'c': {'d': 1, 'e': 2}, 'f': 2}, {10, 20, 30}, [11, 22, 33]],stack.peek().get_items())
 
 
 
@@ -38,8 +40,10 @@ class MyHomeworkTestCase(unittest.TestCase):
 
         queue = Homework_04.Queue()
         self.assertTrue(queue.is_empty())
-        self.assertEqual( None, queue.pop())
-        self.assertEqual( None, queue.peek(),)
+        with self.assertRaises(Exception):
+            queue.pop()
+        with self.assertRaises(Exception):
+            queue.peek()
         queue.push({'a': {'x': 1, 'y': 2}, 'b': 2})
         queue.push({1, 2, 3})
         queue.push([1, 2, 3])
